@@ -69,9 +69,9 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     singleClickActionObject = MouseSingleClick()
                     singleClickActionObject = MouseSingleClick()
                     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-                    XorignalCursorPosition = pyautogui.position().x #originalCursorPosition is the postition of mouse before the mouse moved to record the macro
-                    YorignalCursorPosition = pyautogui.position().y #originalCursorPosition is the postition of mouse before the mouse moved to record the macro
-                    input_delay = int(input("Enter the amount of delay(in seconds) you want before positioning your mouse on the desired location:- "))
+                    # XorignalCursorPosition = pyautogui.position().x #originalCursorPosition is the postition of mouse before the mouse moved to record the macro
+                    # YorignalCursorPosition = pyautogui.position().y #originalCursorPosition is the postition of mouse before the mouse moved to record the macro
+                    # input_delay = int(input("Enter the amount of delay(in seconds) you want before positioning your mouse on the desired location:- "))
                 #     time.sleep(input_delay)
                 #     pyautogui.position()
                 #     XpositionOfCursor = pyautogui.position().x
@@ -106,7 +106,7 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                 #     print("waiting for macro key to be pressed...")
                 #     keyboard.wait(inputMacroKey)
                 #     pyautogui.doubleClick(XpositionOfCursor, YpositionOfCursor)
-                    pyautogui.moveTo(XorignalCursorPosition, YorignalCursorPosition)
+                    # pyautogui.moveTo(XorignalCursorPosition, YorignalCursorPosition)
                 #     print("Action executed successfully")
                     break
                 elif newMacroActionType_UserInput == 3:
