@@ -11,11 +11,11 @@ import pyautogui
 import keyboard
 #end of imports-----------------------
 print("Welcome to OCS. Here, you can map a macro to click a button(and more!)")
-userChoiceToMakeNewMacrosOrUseExisting = int(input("Enter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))
+userChoiceToMakeNewMacrosOrUseExisting = int(input("Enter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))#choices to make new macro or make a new one.
 while userChoiceToMakeNewMacrosOrUseExisting !=0 :
     if userChoiceToMakeNewMacrosOrUseExisting == 0:#0 to exit
         exit()
-    elif userChoiceToMakeNewMacrosOrUseExisting == 1:#1 to use alreadt created shortcuts
+    elif userChoiceToMakeNewMacrosOrUseExisting == 1:#1 to use already created shortcuts
         print("\nwe are working on this bit...\n")
         userChoiceToMakeNewMacrosOrUseExisting = int(input("Enter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))
     elif userChoiceToMakeNewMacrosOrUseExisting == 2:#2 to create new macros
