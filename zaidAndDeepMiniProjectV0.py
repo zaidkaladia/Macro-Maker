@@ -6,10 +6,10 @@
 
 # cli of oneClickSolution
 # imports------------------------------
-from platform import python_branch
 import time
 import pyautogui
 import keyboard
+import pickle
 # end of imports-----------------------
 # i want to some how store the action in a list or something
 
@@ -24,13 +24,21 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
         exit()
     elif userChoiceToMakeNewMacrosOrUseExisting == 1:  # 1 to use already created shortcuts
         # print("\nwe are working on this bit...\n")
+        inputMacroKey = pickle.load(open("inputMacroKeyStoringFile.dat", "rb"))
         print("waiting for the macro key to be pressed...")
         keyboard.wait(inputMacroKey)
+        listOfActions = pickle.load(open("listOfActionStoringFile.dat", "rb"))
         for i in listOfActions:
             if i[0] == "MouseSingleClick":
+                xCoordinateOfOriginalMousePosition = pyautogui.position().x
+                yCoordinateOfOriginalMousePosition = pyautogui.position().y
                 pyautogui.click(i[1], i[2])
+                pyautogui.moveTo(xCoordinateOfOriginalMousePosition, yCoordinateOfOriginalMousePosition)
             elif i[0] == "MouseDoubleClick":
+                xCoordinateOfOriginalMousePosition = pyautogui.position().x
+                yCoordinateOfOriginalMousePosition = pyautogui.position().y
                 pyautogui.doubleClick(i[1], i[2])
+                pyautogui.moveTo(xCoordinateOfOriginalMousePosition, yCoordinateOfOriginalMousePosition)
             elif i[0] == "Keypress":
                 keyboard.press(i[1])
     elif userChoiceToMakeNewMacrosOrUseExisting == 2:  # 2 to create new macros
@@ -39,6 +47,7 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
         inputMacroKey = str(inputMacroKey[0])
         inputMacroKey = inputMacroKey[14:-6]
         print("Your selected macro key was --->", inputMacroKey)
+        pickle.dump(inputMacroKey, open("inputMacroKeyStoringFile.dat", "wb"))
         while True:  # asking the user what action he/she wants to execute. 0 to exit
             newMacroActionType_UserInput = int(input(
                 "Enter the number corresponding to the choice: \n0. Go Back\n1. Mouse Single Click\n2. Mouse Double Click\n3. Key press\nYour Input ---> "))
@@ -75,6 +84,7 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listForKeypresses = ["Keypress", actionKey]
                     listOfActions.append(listForKeypresses)
                 break
+        pickle.dump(listOfActions, open("listOfActionStoringFile.dat", "wb"))
     else:#for an invalid input
         print("\nInvalid input try again!\n")
         userChoiceToMakeNewMacrosOrUseExisting = int(input("Enter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))
