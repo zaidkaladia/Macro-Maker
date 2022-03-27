@@ -6,7 +6,6 @@
 
 # cli of oneClickSolution
 # imports------------------------------
-from msilib.schema import ActionText
 import time
 import pyautogui
 import keyboard
@@ -40,13 +39,31 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                 yCoordinateOfOriginalMousePosition = pyautogui.position().y
                 pyautogui.doubleClick(i[1], i[2])
                 pyautogui.moveTo(xCoordinateOfOriginalMousePosition, yCoordinateOfOriginalMousePosition)
+            elif i[0] == "MouseDrag":
+                pyautogui.moveTo(i[1][0], i[1][1])
+                pyautogui.dragTo(i[2][0], i[2][1], button="left")
             elif i[0] == "Keypress":
                 keyboard.press(i[1])
             elif i[0] == "Text":
                 pyautogui.write(i[1])
-            elif i[0] == "MouseDrag":
-                pyautogui.moveTo(i[1][0], i[1][1])
-                pyautogui.dragTo(i[2][0], i[2][1], button="left")
+            # elif i[0] == "KeyCombination":
+            #     print(i)
+            #     for key in i[1]:
+            #         pyautogui.keyDown(key)
+            #     for key in range(-1, -len(i[1])):
+            #         pyautogui.keyUp(key)
+            #     continue
+            #hotkey method
+            elif i[0] == "KeyCombination":
+                if len(i[1]) == 2:
+                    pyautogui.hotkey(i[1][0], i[1][1])
+                elif len(i[1]) == 3:
+                    pyautogui.hotkey(i[1][0], i[1][1], i[1][2])
+                elif len(i[1]) == 4:
+                    pyautogui.hotkey(i[1][0], i[1][1], i[1][2], i[1][3])
+                else:
+                    print("Are you sure you added the correct key combination? This feature only works with a combination containing 2-4 keys.")
+                # pyautogui.hotkey(i[1])
     elif userChoiceToMakeNewMacrosOrUseExisting == 2:  # 2 to create new macros
         print("press the key to which you want to map the action and then press the escape key:")
         time.sleep(0.5)#it was registering enter without this delay
@@ -103,7 +120,6 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listForMouseDrag = ["MouseDrag", [XstartPositionForDrag, YstartPositionForDrag], [XendPositionForDrag, YendPositionForDrag]]
                     listOfActions.append(listForMouseDrag)
                     break
-                    # exit()
                 elif newMacroActionType_UserInput == 4:#For Keypress
                     print("Press the key you want to be pressed with the macro(press escape after pressing the key)")
                     time.sleep(1)
@@ -115,16 +131,14 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listForKeypresses = ["Keypress", actionKey]
                     listOfActions.append(listForKeypresses)
                 elif newMacroActionType_UserInput == 5:#for text
-                    # print("This is for Text which, isnt completed yet.")
-                    # exit()
                     actionText = input("Enter the text you want to be typed with the macro(press escape after pressing the key)\nYour Input --->")
-                    # print("The text you entered was --->", actionText)
                     listForText = ["Text", actionText]
                     listOfActions.append(listForText)
                 elif newMacroActionType_UserInput == 6:#for Key Combination
-                    print("This is for Text which, isnt completed yet.")
-                    exit()
-                    
+                    actionKeyCombination = input("Enter the key combination/shortcut you want the macro to perform(Eg: ctrl,shift,alt,v)")
+                    actionKeyCombination = actionKeyCombination.split(',')
+                    listForKeyCombination = ["KeyCombination", actionKeyCombination]
+                    listOfActions.append(listForKeyCombination)                    
                 break
         pickle.dump(listOfActions, open("listOfActionStoringFile.dat", "wb"))
     else:#for an invalid input
