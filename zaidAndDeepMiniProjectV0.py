@@ -6,6 +6,7 @@
 
 # cli of oneClickSolution
 # imports------------------------------
+from msilib.schema import ActionText
 import time
 import pyautogui
 import keyboard
@@ -41,6 +42,8 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                 pyautogui.moveTo(xCoordinateOfOriginalMousePosition, yCoordinateOfOriginalMousePosition)
             elif i[0] == "Keypress":
                 keyboard.press(i[1])
+            elif i[0] == "Text":
+                pyautogui.write(i[1])
             elif i[0] == "MouseDrag":
                 pyautogui.moveTo(i[1][0], i[1][1])
                 pyautogui.dragTo(i[2][0], i[2][1], button="left")
@@ -55,6 +58,12 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
         while True:  # asking the user what action he/she wants to execute. 0 to exit
             newMacroActionType_UserInput = int(input(
                 "Enter the number corresponding to the choice: \n0. Go Back\n1. Mouse Single Click\n2. Mouse Double Click\n3. Mouse Drag\n4. Key Press\n5. Text\n6. Key Combination\nYour Input ---> "))
+                #1. Mouse Single Click
+                #2. Mouse Double Click
+                #3. Mouse Drag
+                #4. Key Press
+                #5. Text
+                #6. Key Combination
             if newMacroActionType_UserInput == 0:
                 userChoiceToMakeNewMacrosOrUseExisting = int(input(
                     "\nYou got back\n\nEnter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))
@@ -95,7 +104,7 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listOfActions.append(listForMouseDrag)
                     break
                     # exit()
-                elif newMacroActionType_UserInput == 4:
+                elif newMacroActionType_UserInput == 4:#For Keypress
                     print("Press the key you want to be pressed with the macro(press escape after pressing the key)")
                     time.sleep(1)
                     actionKey = keyboard.record(until='esc')#its the key the user wants the program to press after he presses the macro key
@@ -106,8 +115,12 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listForKeypresses = ["Keypress", actionKey]
                     listOfActions.append(listForKeypresses)
                 elif newMacroActionType_UserInput == 5:#for text
-                    print("This is for Text which, isnt completed yet.")
-                    exit()
+                    # print("This is for Text which, isnt completed yet.")
+                    # exit()
+                    actionText = input("Enter the text you want to be typed with the macro(press escape after pressing the key)\nYour Input --->")
+                    # print("The text you entered was --->", actionText)
+                    listForText = ["Text", actionText]
+                    listOfActions.append(listForText)
                 elif newMacroActionType_UserInput == 6:#for Key Combination
                     print("This is for Text which, isnt completed yet.")
                     exit()
