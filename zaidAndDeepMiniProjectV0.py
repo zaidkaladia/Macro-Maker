@@ -41,8 +41,12 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                 pyautogui.moveTo(xCoordinateOfOriginalMousePosition, yCoordinateOfOriginalMousePosition)
             elif i[0] == "Keypress":
                 keyboard.press(i[1])
+            elif i[0] == "MouseDrag":
+                pyautogui.moveTo(i[1][0], i[1][1])
+                pyautogui.dragTo(i[2][0], i[2][1], button="left")
     elif userChoiceToMakeNewMacrosOrUseExisting == 2:  # 2 to create new macros
         print("press the key to which you want to map the action and then press the escape key:")
+        time.sleep(0.5)#it was registering enter without this delay
         inputMacroKey = keyboard.record(until='esc')
         inputMacroKey = str(inputMacroKey[0])
         inputMacroKey = inputMacroKey[14:-6]
@@ -50,7 +54,7 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
         pickle.dump(inputMacroKey, open("inputMacroKeyStoringFile.dat", "wb"))
         while True:  # asking the user what action he/she wants to execute. 0 to exit
             newMacroActionType_UserInput = int(input(
-                "Enter the number corresponding to the choice: \n0. Go Back\n1. Mouse Single Click\n2. Mouse Double Click\n3. Key press\nYour Input ---> "))
+                "Enter the number corresponding to the choice: \n0. Go Back\n1. Mouse Single Click\n2. Mouse Double Click\n3. Mouse Drag\n4. Key Press\n5. Text\n6. Key Combination\nYour Input ---> "))
             if newMacroActionType_UserInput == 0:
                 userChoiceToMakeNewMacrosOrUseExisting = int(input(
                     "\nYou got back\n\nEnter the number corresponding to the choice: \n0. Exit\n1. Use your created shortcuts\n2. Create new macros\nYour Input ---> "))
@@ -73,7 +77,25 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     listForMouseDoubleClick = ["MouseDoubleClick", pyautogui.position().x, pyautogui.position().y]
                     listOfActions.append(listForMouseDoubleClick)
                     break
-                elif newMacroActionType_UserInput == 3:
+                elif newMacroActionType_UserInput == 3:#for mouse drag
+                    # print("This is for mouse drag which, isnt completed yet.")
+                    input_delay = int(input("Enter the amount of delay(in seconds) you want before positioning your mouse on the START position of the mouse drag:- "))
+                    for i in range(1, input_delay+1):
+                        print("tik tik", i)
+                        time.sleep(1)
+                    XstartPositionForDrag = pyautogui.position().x
+                    YstartPositionForDrag = pyautogui.position().y
+                    input_delay = int(input("Enter the amount of delay(in seconds) you want before positioning your mouse on the END position of the mouse drag:- "))
+                    XendPositionForDrag = pyautogui.position().x
+                    YendPositionForDrag = pyautogui.position().y
+                    for i in range(1, input_delay+1):
+                        print("tik tik", i)
+                        time.sleep(1)
+                    listForMouseDrag = ["MouseDrag", [XstartPositionForDrag, YstartPositionForDrag], [XendPositionForDrag, YendPositionForDrag]]
+                    listOfActions.append(listForMouseDrag)
+                    break
+                    # exit()
+                elif newMacroActionType_UserInput == 4:
                     print("Press the key you want to be pressed with the macro(press escape after pressing the key)")
                     time.sleep(1)
                     actionKey = keyboard.record(until='esc')#its the key the user wants the program to press after he presses the macro key
@@ -83,6 +105,13 @@ while userChoiceToMakeNewMacrosOrUseExisting != 0:
                     print("The key you pressed was --->", actionKey)
                     listForKeypresses = ["Keypress", actionKey]
                     listOfActions.append(listForKeypresses)
+                elif newMacroActionType_UserInput == 5:#for text
+                    print("This is for Text which, isnt completed yet.")
+                    exit()
+                elif newMacroActionType_UserInput == 6:#for Key Combination
+                    print("This is for Text which, isnt completed yet.")
+                    exit()
+                    
                 break
         pickle.dump(listOfActions, open("listOfActionStoringFile.dat", "wb"))
     else:#for an invalid input
